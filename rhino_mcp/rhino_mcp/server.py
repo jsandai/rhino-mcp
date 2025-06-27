@@ -1,14 +1,20 @@
 """Rhino integration through the Model Context Protocol."""
+import sys
+import os
+from pathlib import Path
+
+# Add the current directory to Python path to allow imports
+current_dir = Path(__file__).parent
+sys.path.insert(0, str(current_dir))
+
 from mcp.server.fastmcp import FastMCP, Context, Image
 import logging
-import os
 from dataclasses import dataclass
 from contextlib import asynccontextmanager
 from typing import AsyncIterator, Dict, Any, List, Optional
 import json
 import io
 from PIL import Image as PILImage
-from pathlib import Path
 
 # Try to load environment variables from .env file
 try:
@@ -20,11 +26,11 @@ try:
 except ImportError:
     logging.warning("python-dotenv not installed. Install it to use .env files: pip install python-dotenv")
 
-# Import our tool modules
-from .replicate_tools import ReplicateTools
-from .rhino_tools import RhinoTools, get_rhino_connection
-from .grasshopper_tools import GrasshopperTools, get_grasshopper_connection
-from .utility_tools import UtilityTools
+# Import our tool modules - changed from relative to absolute imports
+from replicate_tools import ReplicateTools
+from rhino_tools import RhinoTools, get_rhino_connection
+from grasshopper_tools import GrasshopperTools, get_grasshopper_connection
+from utility_tools import UtilityTools
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, 
